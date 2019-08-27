@@ -25,6 +25,8 @@
 namespace CudaHT {
 namespace CuckooHashing {
 
+// TODO: encode 48bit as key and 16bit as value.
+
 //! Makes an 64-bit Entry out of a key-value pair for the hash table.
 inline __device__ __host__ Entry make_entry(unsigned key, unsigned value) {
   return (Entry(key) << 32) + value;
@@ -51,6 +53,8 @@ void clear_table(const unsigned  table_size,
                  const T         value,
                        T        *table)
 {       
+  // TODO: think about the table size if more than 2^32 = 4GB
+
   unsigned thread_index = threadIdx.x +
                           blockIdx.x * blockDim.x +
                           blockIdx.y * blockDim.x * gridDim.x;
@@ -91,6 +95,9 @@ KeyLocations(const Functions<kNumHashFunctions> constants,
  *  @param[out] num_probes_required   Debug only: The number of probes required to resolve the query.
  *  @returns The value of the query key, if the key exists in the table.  Otherwise, \ref kNotFound will be returned.
  */
+
+// TODO: change the type of query_key and return value.
+
 template <unsigned kNumHashFunctions> __device__
 unsigned retrieve(const unsigned                      query_key,
                   const unsigned                      table_size,

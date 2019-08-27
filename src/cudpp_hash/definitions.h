@@ -84,6 +84,7 @@ const unsigned kMaxHashFunctions   = 5;             //!< Maximum number of hash 
 const unsigned kStashSize          = 101;           //!< How many slots the stash hash table contains.
 
 //! Value indicating that a hash table slot has no valid item within it.
+// TODO: for key type of unsigned long long
 const Entry    kEntryEmpty         = Entry(kKeyEmpty) << 32;
 
 //! Value returned when a query fails.
