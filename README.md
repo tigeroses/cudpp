@@ -1,3 +1,13 @@
+Modification
+============
+
+The type of "key-value" in original CUDPP's hash table is "unsigned int - unsigned int", 
+and encode the key-value pair into the Entry: unsigned long long.
+
+This repo changes the type of key from unsigned int to unsigned long long,
+but just use the lower 48bit, changes the type of value from unsigned int to
+unsigned short, it has 16bit, and also encode the key-value pair into the Entry: unsigned long long.
+
 CUDPP documentation                         {#mainpage}
 ===================
 
