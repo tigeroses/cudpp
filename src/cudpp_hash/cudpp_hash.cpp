@@ -344,8 +344,10 @@ cudppHashInsert(CUDPPHandle plan, const void* d_keys, const void* d_vals,
     case CUDPP_BASIC_HASH_TABLE:
     {
         hti_basic * hti = (hti_basic *) getPlanPtrFromHandle<hti_basic>(plan);
-        bool s = hti->hash_table->Build(num, (const unsigned int *) d_keys, 
-                                        (const unsigned int *) d_vals);
+       /* bool s = hti->hash_table->Build(num, (const unsigned int *) d_keys, 
+                                        (const unsigned int *) d_vals);*/
+		bool s = hti->hash_table->Build(num, (const unsigned long long *)d_keys,
+			(const unsigned short *)d_vals);
         return s ? CUDPP_SUCCESS : CUDPP_ERROR_UNKNOWN;
         break;
     }
@@ -408,8 +410,10 @@ cudppHashRetrieve(CUDPPHandle plan, const void* d_keys, void* d_vals,
     case CUDPP_BASIC_HASH_TABLE:
     {
         hti_basic * hti = (hti_basic *) getPlanPtrFromHandle<hti_basic>(plan);
-        hti->hash_table->Retrieve(num, (const unsigned int *) d_keys, 
-                                           (unsigned int *) d_vals);
+       /* hti->hash_table->Retrieve(num, (const unsigned int *) d_keys, 
+                                           (unsigned int *) d_vals);*/
+		hti->hash_table->Retrieve(num, (const unsigned long long *)d_keys,
+			(unsigned short *)d_vals);
         return CUDPP_SUCCESS;
         break;
     }

@@ -121,6 +121,10 @@ class HashTable {
                      const unsigned *d_keys,
                      const unsigned *d_vals);
 
+  virtual bool Build(const unsigned  input_size,
+	  const unsigned long long *d_keys,
+	  const unsigned short *d_vals);
+
   //! Query the hash table.
   /*! @param[in] n_queries        Number of keys in the query set.
    *  @param[in] d_query_keys     Device memory array containing all of
@@ -133,6 +137,10 @@ class HashTable {
   virtual void Retrieve(const unsigned  n_queries,
                         const unsigned *d_query_keys,
                               unsigned *d_query_results);
+
+  virtual void Retrieve(const unsigned  n_queries,
+	  const unsigned long long *d_query_keys,
+	  unsigned short *d_query_results);
 
   //! @name Accessors
   /// @brief Mainly needed to use the __device__ CudaHT::retrieve()
@@ -216,6 +224,22 @@ void CallCuckooHash(const unsigned      n_entries,
                           unsigned     *d_failures,
                           unsigned     *d_iterations_taken);
 
+void CallCuckooHash(const unsigned      n_entries,
+	const unsigned      num_hash_functions,
+	const unsigned long long     *d_keys,
+	const unsigned short    *d_values,
+	const unsigned      table_size,
+	const Functions<2>  constants_2,
+	const Functions<3>  constants_3,
+	const Functions<4>  constants_4,
+	const Functions<5>  constants_5,
+	const unsigned      max_iteration_attempts,
+	Entry        *d_contents,
+	uint2         stash_constants,
+	unsigned     *d_stash_count,
+	unsigned     *d_failures,
+	unsigned     *d_iterations_taken);
+
 //! Calls the kernel that performs retrievals.
 void CallHashRetrieve(const unsigned      n_queries,
                       const unsigned      num_hash_functions,
@@ -229,6 +253,19 @@ void CallHashRetrieve(const unsigned      n_queries,
                       const uint2         stash_constants,
                       const unsigned      stash_count,
                             unsigned     *values_out);
+
+void CallHashRetrieve(const unsigned      n_queries,
+	const unsigned      num_hash_functions,
+	const unsigned long long     *keys_in,
+	const unsigned      table_size,
+	const Entry        *table,
+	const Functions<2>  constants_2,
+	const Functions<3>  constants_3,
+	const Functions<4>  constants_4,
+	const Functions<5>  constants_5,
+	const uint2         stash_constants,
+	const unsigned      stash_count,
+	unsigned short     *values_out);
 };
 /// @}
 

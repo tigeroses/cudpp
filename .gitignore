@@ -1,0 +1,4 @@
+bin
+doc
+apps
+include/cudpp_config.h

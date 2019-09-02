@@ -78,16 +78,21 @@ namespace CuckooHashing {
 typedef unsigned long long Entry;                   //!< A key and its value are stored in a 64-bit number.  The key is stored in the upper 32 bits.
 
 const unsigned kMaxRestartAttempts = 10;            //!< Number of build attempts.
-const unsigned kKeyEmpty           = 0xffffffffu;   //!< Signifies empty slots in the table.
-const unsigned kNotFound           = 0xffffffffu;   //!< Signifies that a query key was not found.
+//const unsigned kKeyEmpty           = 0xffffffffu;   //!< Signifies empty slots in the table.
+//const unsigned kNotFound           = 0xffffffffu;   //!< Signifies that a query key was not found.
+const unsigned long long kKeyEmpty = 0xffffffffffffu;   //!< Signifies empty slots in the table.
+const unsigned short kNotFound = 0xffffu;   //!< Signifies that a query key was not found.
+
 const unsigned kMaxHashFunctions   = 5;             //!< Maximum number of hash functions allowed.
 const unsigned kStashSize          = 101;           //!< How many slots the stash hash table contains.
 
 //! Value indicating that a hash table slot has no valid item within it.
-const Entry    kEntryEmpty         = Entry(kKeyEmpty) << 32;
+//const Entry    kEntryEmpty         = Entry(kKeyEmpty) << 32;
+const Entry    kEntryEmpty = Entry(kKeyEmpty) << 16;
 
 //! Value returned when a query fails.
-const Entry    kEntryNotFound      = (Entry(kKeyEmpty) << 32) + kNotFound;
+//const Entry    kEntryNotFound      = (Entry(kKeyEmpty) << 32) + kNotFound;
+const Entry    kEntryNotFound = (Entry(kKeyEmpty) << 16) + kNotFound;
 
 //! Number of threads to put in a thread block.
 const unsigned kBlockSize = 64;
