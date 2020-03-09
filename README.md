@@ -1,5 +1,8 @@
 Modification
 ============
+修改CUDPP库中哈希功能支持更长的键类型.
+
+原库支持32bit键值对,将其编码在64bit的long long类型中;我实际工作中需要对碱基序列进行哈希查找,每一个碱基可能有ACGTN五种类型,最开始只处理单barcode是10bp,所以有5^10(9765625)种可能序列,不到10M数据,在cuda中使用数组就可以了;后来需要处理双barcode,20bp,有5^20(95367431640625)种可能序列,需要约95T数据,数组显然不够,只能用哈希,因此将键类型从32bit扩展到48bit,可以支持5^20的键,剩下16bit存储值,依然编码到64bit的long long类型,达到最小改动满足需求的目的.
 
 The type of "key-value" in original CUDPP's hash table is "unsigned int - unsigned int", 
 and encode the key-value pair into the Entry: unsigned long long.
